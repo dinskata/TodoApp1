@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "Home";
+    Layout = "_Layout"; // Make sure this matches your layout file
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to ToDo App</h1>
+    
+    @if (Context.Session.GetInt32("UserId") == null)
+    {
+        <div class="mt-5">
+            <p>Please log in to access your todo lists</p>
+            <a asp-controller="Login" asp-action="Index" class="btn btn-primary btn-lg">
+                <i class="fas fa-sign-in-alt me-2"></i> Login
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="mt-5">
+            <p>You're already logged in!</p>
+            <a asp-controller="ToDoLists" asp-action="Index" class="btn btn-success btn-lg">
+                <i class="fas fa-list-check me-2"></i> Go to My Lists
+            </a>
+        </div>
+    }
+</div>

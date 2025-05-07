@@ -1,0 +1,57 @@
+@model IEnumerable<ToDoList>
+
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><i class="fas fa-layer-group me-2"></i>My ToDo Lists</h2>
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="fas fa-plus me-1"></i> New List
+        </a>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle me-2"></i>You don't have any lists yet.
+        </div>
+    }
+    else
+    {
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            @foreach (var list in Model)
+            {
+                <div class="col">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title d-flex justify-content-between">
+                                <span>@list.Title</span>
+                                <span class="badge bg-primary rounded-pill">
+                                    @list.Tasks?.Count() tasks
+                                </span>
+                            </h5>
+                            <p class="card-text text-muted small">
+                                <i class="fas fa-calendar me-1"></i>
+                                Created @list.CreatedAt.ToString("MMM dd, yyyy")
+                            </p>
+                        </div>
+                        <div class="card-footer bg-transparent border-top-0">
+                            <div class="d-flex justify-content-between">
+                                <a asp-controller="Tasks" asp-action="Index" asp-route-listId="@list.Id" 
+                                   class="btn btn-sm btn-outline-primary">
+                                    <i class="fas fa-tasks me-1"></i> View
+                                </a>
+                                <div>
+                                    <a asp-action="Edit" asp-route-id="@list.Id" class="btn btn-sm btn-outline-secondary">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@list.Id" class="btn btn-sm btn-outline-danger ms-1">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
